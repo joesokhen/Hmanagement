@@ -1,16 +1,30 @@
 package customers;
 
 public class Customer {
-    private final String firstName;
-    private final String lastName;
-    private final String phoneNumber;
-    private int roomNumber;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
 
-    public Customer(String firstName, String lastName, String phoneNumber, int roomNumber) {
+    public Customer(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.roomNumber = roomNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getFullName() {
@@ -21,12 +35,8 @@ public class Customer {
         return phoneNumber;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -34,8 +44,7 @@ public class Customer {
         return "Customer{"
                 + "firstName='" + firstName + '\''
                 + ", lastName='" + lastName + '\''
-                + ", phoneNumber='" + phoneNumber + '\''
-                + ", roomNumber=" + roomNumber
+                + ", phoneNumber='" + phoneNumber
                 + '}';
     }
 }

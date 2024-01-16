@@ -1,53 +1,52 @@
+
 import base.Management;
 import hotelrooms.HotelRooms;
 
-import javax.swing.*;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
 
-    private static Scanner scanner = new Scanner(System.in);
-
     public static void main(String[] args) {
 
-        JOptionPane.showMessageDialog(null,"welcome to the hotel management system!","startup",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Welcome To The Hotel Management System!", "Startup", JOptionPane.INFORMATION_MESSAGE);
 
         // 2 suites, 3 queens, and 4 singles
         HotelRooms hotel = new HotelRooms(2, 3, 4);
         int choice;
-        String menu = "Menu\n\n1. Display rooms\n2. Create Rooms\n3. Check Out\n4.Exit\nEnter Your Choice: ";
+        String[] menu = {"Display Rooms", "Create Reservation", "Check Out", "Exit"};
 
         do {
-            choice= Integer.parseInt(JOptionPane.showInputDialog(menu));
+            choice = JOptionPane.showOptionDialog(null,
+                    "Welcome to the Hotel Management System!", "Main Menu",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                    null, menu, menu[0]);
+            if (choice == JOptionPane.CLOSED_OPTION) {
+                JOptionPane.showMessageDialog(null, "Exiting the Hotel Management System. Goodbye!", "Exit", JOptionPane.INFORMATION_MESSAGE);
+                break; // Exit the loop if the user closes the dialog
+            }
 
             switch (choice) {
-                case 1:
-                    hotel.displayAllRooms();                  
+                case 0:
+                    hotel.displayAllRooms();
                     break;
-
-                case 2:
+                case 1:
                     String roomType = Management.selectRoomType();
-                    // Check if the maximum number of rooms is reached 
-                    // for the selected room type.
                     if (!hotel.isMaxRoomsReached(roomType)) {
                         Management.getReservationInput(hotel, roomType);
                     } else {
                         Management.handleMaxRoomsReached(hotel, roomType);
                     }
                     break;
-
-                case 3:
+                case 2:
                     hotel.checkOut();
                     break;
-
-                case 0:
-                    JOptionPane.showMessageDialog(null,"Exiting the Hotel Management System. Goodbye!","exit",JOptionPane.INFORMATION_MESSAGE);
+                case 3:
+                    JOptionPane.showMessageDialog(null, "Exiting the Hotel Management System. Goodbye!", "Exit", JOptionPane.INFORMATION_MESSAGE);
                     break;
-
                 default:
-                    JOptionPane.showMessageDialog(null,"Invalid choice. Please try again.","error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
             }
-        } while (choice
-                != 0);
+        } while (choice != 3); // Continue until "Exit" is chosen
     }
 }

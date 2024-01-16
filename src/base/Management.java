@@ -1,7 +1,6 @@
 package base;
 
 import hotelrooms.HotelRooms;
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class Management {
@@ -44,7 +43,8 @@ public class Management {
 
     public static void getReservationInput(HotelRooms hotel, String roomType) {
         String firstName, lastName, phoneNumber;
-
+        // Check each field a time instead of bulk checking, this eliminate the
+        // hasstle to input all info from scratch in case of a user mistake.        
         do {
             firstName = JOptionPane.showInputDialog("Enter Customer First Name: ");
             if (firstName == null) {
@@ -74,45 +74,63 @@ public class Management {
     }
 
     public static void handleMaxRoomsReached(HotelRooms hotel, String roomType) {
-        int userChoice = JOptionPane.showConfirmDialog(null,
+        int userChoice, newNumberOfRooms;
+
+        userChoice = JOptionPane.showConfirmDialog(null,
                 "All " + roomType + " rooms are occupied. Do you want to increase the number of " + roomType + " rooms?",
                 "Room Occupancy", JOptionPane.YES_NO_OPTION);
 
         if (userChoice == JOptionPane.YES_OPTION) {
-            int newNumberOfRooms = Integer.parseInt(JOptionPane.showInputDialog(
-                    null, "Enter the new number of " + roomType + " rooms:", "Room Occupancy", JOptionPane.PLAIN_MESSAGE));
+            try {
+                String input = JOptionPane.showInputDialog(
+                        null,
+                        "Enter the new number of " + roomType + " rooms:",
+                        "Room Occupancy",
+                        JOptionPane.PLAIN_MESSAGE
+                );
 
-            // Validate the new number of rooms
-            switch (roomType) {
-                case "Suite":
-                    if (newNumberOfRooms > hotel.getNumberOfSuites()) {
-                        hotel.increaseNumberOfRooms("Suite", newNumberOfRooms);
-                        getReservationInput(hotel, roomType);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Increasing number of " + roomType + " rooms failed, all " + roomType + " rooms are occupied.");
-                    }
-                    break;
+                // Check if the input is null or empty & return to the menu
+                if (input == null || input.isEmpty()) {
+                    return;
+                }
 
-                case "Queen":
-                    if (newNumberOfRooms > hotel.getNumberOfQueens()) {
-                        hotel.increaseNumberOfRooms("Queen", newNumberOfRooms);
-                        getReservationInput(hotel, roomType);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Increasing number of " + roomType + " rooms failed, all " + roomType + " rooms are occupied.");
-                    }
-                    break;
+                newNumberOfRooms = Integer.parseInt(input);
 
-                case "Single":
-                    if (newNumberOfRooms > hotel.getNumberOfSingles()) {
-                        hotel.increaseNumberOfRooms("Single", newNumberOfRooms);
-                        getReservationInput(hotel, roomType);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Increasing number of " + roomType + " rooms failed, all " + roomType + " rooms are occupied.");
-                    }
-                    break;
+                // Validate the new number of rooms
+                switch (roomType) {
+                    case "Suite":
+                        if (newNumberOfRooms > hotel.getNumberOfSuites()) {
+                            hotel.increaseNumberOfRooms("Suite", newNumberOfRooms);
+                            getReservationInput(hotel, roomType);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Failed to increase number of " + roomType + " rooms.");
+                        }
+                        break;
 
-                default:
-                    break;
+                    case "Queen":
+                        if (newNumberOfRooms > hotel.getNumberOfQueens()) {
+                            hotel.increaseNumberOfRooms("Queen", newNumberOfRooms);
+                            getReservationInput(hotel, roomType);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Failed to increase number of " + roomType + " rooms.");
+                        }
+                        break;
+
+                    case "Single":
+                        if (newNumberOfRooms > hotel.getNumberOfSingles()) {
+                            hotel.increaseNumberOfRooms("Single", newNumberOfRooms);
+                            getReservationInput(hotel, roomType);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Failed to increase number of " + roomType + " rooms.");
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                // Validate this field contains only numbers.            
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

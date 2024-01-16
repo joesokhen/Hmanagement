@@ -1,5 +1,7 @@
 import base.Management;
 import hotelrooms.HotelRooms;
+
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
@@ -8,22 +10,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println(
-                "Welcome to the HManagement System!");
+        JOptionPane.showMessageDialog(null,"welcome to the hotel management system!","startup",JOptionPane.INFORMATION_MESSAGE);
 
         // 2 suites, 3 queens, and 4 singles
         HotelRooms hotel = new HotelRooms(2, 3, 4);
         int choice;
+        String menu = "Menu\n\n1. Display rooms\n2. Create Rooms\n3. Check Out\n4.Exit\nEnter Your Choice: ";
 
         do {
-            System.out.println("\nMenu:");
-            System.out.println("1. Display Rooms");
-            System.out.println("2. Create Reservation");
-            System.out.println("3. Check Out");
-            System.out.println("0. Exit");
-
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
+            choice= Integer.parseInt(JOptionPane.showInputDialog(menu));
 
             switch (choice) {
                 case 1:
@@ -46,11 +41,11 @@ public class Main {
                     break;
 
                 case 0:
-                    System.out.println("Exiting the Hotel Management System. Goodbye!");
+                    JOptionPane.showMessageDialog(null,"Exiting the Hotel Management System. Goodbye!","exit",JOptionPane.INFORMATION_MESSAGE);
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    JOptionPane.showMessageDialog(null,"Invalid choice. Please try again.","error",JOptionPane.ERROR_MESSAGE);
             }
         } while (choice
                 != 0);

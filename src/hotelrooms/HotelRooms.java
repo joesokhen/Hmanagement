@@ -5,13 +5,13 @@ import javax.swing.JOptionPane;
 
 public class HotelRooms {
 
-    private int numberOfSuites;
-    private int numberOfQueens;
-    private int numberOfSingles;
+    private int numberOfSuites; // how many suites in the hotel
+    private int numberOfQueens; // how many queen rooms in the hotel
+    private int numberOfSingles; // how many single bed rooms in the hotel
     public Room[] suiteRooms;
     public Room[] queenRooms;
     public Room[] singleRooms;
-//    public STATIC String[] Lista =  {"Suite", "Queen", "Single"};
+//    public STATIC String[] Lists =  {"Suite", "Queen", "Single"};
 
     public HotelRooms(int numberOfSuites, int numberOfQueens, int numberOfSingles) {
         this.numberOfSuites = numberOfSuites;
@@ -71,17 +71,19 @@ public class HotelRooms {
     }
 
     public void displayRooms(String roomType) {
-        System.out.println(roomType + "s:");
+
+        String temp = roomType + "s:\n";
 
         Room[] rooms = getRoomsByType(roomType);
         for (int i = 0; i < rooms.length; i++) {
             Room room = rooms[i];
             if (room == null) {
-                System.out.println("\t" + roomType + " " + (i + 1) + ": Free");
+                temp +=("\t" + roomType + " " + (i + 1) + ": Free\n");
             } else {
-                System.out.println("\t" + roomType + " " + (i + 1) + ": " + room.getFullName());
+                temp+=("\t" + roomType + " " + (i + 1) + ": " + room.getFullName()+"\n");
             }
         }
+        JOptionPane.showMessageDialog(null,temp,"all rooms",JOptionPane.INFORMATION_MESSAGE );
     }
 
     public void displayAllRooms() {
@@ -94,12 +96,12 @@ public class HotelRooms {
         Room[] rooms = getRoomsByType(roomType);
 
         if (rooms == null) {
-            System.out.println("Invalid room type.");
+            JOptionPane.showMessageDialog(null, "Invalid room type.","error",JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (isMaxRoomsReached(roomType)) {
-            System.out.println("No available rooms for " + roomType + ".");
+            JOptionPane.showMessageDialog(null,"No available rooms for " + roomType + ".","error",JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -112,7 +114,7 @@ public class HotelRooms {
                 Room room = reserveRoom(roomType, i + 1);
                 room.setCustomer(customer); // Set the customer for the room
                 rooms[i] = room;
-                System.out.println("Reservation created for " + firstName + " " + lastName + " in " + roomType + " " + room.getRoomNumber());
+                JOptionPane.showMessageDialog(null,"Reservation created for " + firstName + " " + lastName + " in " + roomType + " " + room.getRoomNumber());
                 return;
             }
         }
@@ -205,7 +207,7 @@ public class HotelRooms {
         }
 
         if (rooms == null) {
-            System.out.println("Invalid room type.");
+            JOptionPane.showMessageDialog(null,"Invalid room type.","error",JOptionPane.ERROR_MESSAGE);
             return;
         }
 

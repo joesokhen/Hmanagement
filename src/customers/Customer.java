@@ -1,15 +1,21 @@
 package customers;
 
 public class Customer {
+
+    //customers in the hotel will have 3 main attributes in which they should be identified by
     private String firstName;
     private String lastName;
     private String phoneNumber;
 
+    //all arguments constructor
     public Customer(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
     }
+
+    // getters and setters
+
 
     public String getFirstName() {
         return firstName;

@@ -2,6 +2,7 @@ package hotelrooms;
 
 import customers.Customer;
 
+// created an abstract class "Room" which all room types will be related to by polymorphism
 public abstract class Room {
 
     protected int roomNumber;

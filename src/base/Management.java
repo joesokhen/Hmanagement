@@ -1,6 +1,7 @@
 package base;
 
 import hotelrooms.HotelRooms;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class Management {
@@ -42,9 +43,31 @@ public class Management {
     }
 
     public static void getReservationInput(HotelRooms hotel, String roomType) {
-        String firstName = JOptionPane.showInputDialog("Enter Customer First Name: ");
-        String lastName = JOptionPane.showInputDialog("Enter Customer Last Name: ");
-        String phoneNumber = JOptionPane.showInputDialog("Enter Customer Phone Number: ");
+        String firstName, lastName, phoneNumber;
+
+        do {
+            firstName = JOptionPane.showInputDialog("Enter Customer First Name: ");
+            if (firstName == null) {
+                JOptionPane.showMessageDialog(null, "Operation aborted. Returning to the menu.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        } while (firstName.isEmpty() || firstName.equals(Integer.toString(JOptionPane.OK_OPTION)));
+
+        do {
+            lastName = JOptionPane.showInputDialog("Enter Customer Last Name: ");
+            if (lastName == null) {
+                JOptionPane.showMessageDialog(null, "Operation aborted. Returning to the menu.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        } while (lastName.isEmpty() || lastName.equals(Integer.toString(JOptionPane.OK_OPTION)));
+
+        do {
+            phoneNumber = JOptionPane.showInputDialog("Enter Customer Phone Number: ");
+            if (phoneNumber == null) {
+                JOptionPane.showMessageDialog(null, "Operation aborted. Returning to the menu.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        } while (phoneNumber.isEmpty() || phoneNumber.equals(Integer.toString(JOptionPane.OK_OPTION)));
 
         // Now, create the reservation by calling the method
         hotel.createReservation(roomType, firstName, lastName, phoneNumber);
